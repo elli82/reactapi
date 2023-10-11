@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 export default function UpdateBook(props) {
-    const initialFormData = Object.freeze ({
+    const initialFormData = Object.freeze({
         title: props.book.title,
         author: props.book.author,
-        yearofPublication: props.book.year,
+        yearofPublication: props.book.yearofPublication,
         genre: props.book.genre,
         available: props.book.available,
     });
@@ -75,12 +75,12 @@ export default function UpdateBook(props) {
             </div>
             <div className="mt-5">
                 <label className="h3 form-label">Year of Publication</label>
-                <input 
-                value={formData.yearofPublication} 
-                name="yearofPublication" 
-                type="text" 
-                className="form-control" 
-                onChange={handleChange}
+                <input
+                    value={formData.yearofPublication}
+                    name="yearofPublication"
+                    type="text"
+                    className="form-control"
+                    onChange={handleChange}
                 />
             </div>
             <div className="mt-5">
@@ -91,7 +91,7 @@ export default function UpdateBook(props) {
                     type="text"
                     className="form-control"
                     onChange={handleChange}
-                    />
+                />
             </div>
             <div className="mt-5">
                 <label className="h3 form-label">Available</label>

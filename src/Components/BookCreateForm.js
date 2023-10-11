@@ -1,17 +1,15 @@
 import React, { useState } from 'react'
 
 
-export default function BookCreateForm(props) {
+export default function BookCreateForm(props) {    
 
-    const initialFormData = Object.freeze({
-        title: "book",
-        author: "author",
-        yearofPublication: "year",
-        genre: "genre",
+    const [formData, setFormdata] = useState({
+        title: '',
+        author: '',
+        yearofPublication: '',
+        genre: '',
         available: false,
     });
-
-    const [formData, setFormdata] = useState(initialFormData);
 
     const handleChange = (e) => {
         setFormdata({
