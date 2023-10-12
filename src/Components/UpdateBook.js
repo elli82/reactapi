@@ -51,7 +51,7 @@ export default function UpdateBook(props) {
 
     return (
         <form className="w-100 px-5">
-            <h1 className="mt-5">Update "{props.book.title}".</h1>
+            <h1 className="mt-5">Update "{props.book.title}"</h1>
 
             <div className="mt-5">
                 <label className="h3 form-label">Title</label>
@@ -99,6 +99,7 @@ export default function UpdateBook(props) {
                     checked={formData.available}
                     name="available"
                     type="checkbox"
+                    style={{ width: "35px", height: "25px" }}
                     className="form-checkbox"
                     onChange={(e) => {
                         setFormData({
