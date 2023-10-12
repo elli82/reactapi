@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import BookCreateForm from "./Components/BookCreateForm";
 import UpdateBook from "./Components/UpdateBook";
+import './fontawesome.css';
+
 
 export default function App() {
+
+  const backgroundColor= '#f0ead6';
+  
   const [books, setBooks] = useState([]);
   const [showAddNewBookForm, setShowAddNewBookForm] = useState(false);
   const [bookCurrentUpdated, setBookCurrentUpdated] = useState(null);
+
 
   function getBooks() {
     const url = 'https://localhost:7001/api/books';
@@ -42,26 +48,34 @@ export default function App() {
 
   }
   return (
+    <div
+      style={{
+        backgroundColor,
+        width: '100%',
+        height: '100%',  
+      }}
+    >
     <div className="container">
       <div className="row min-vh-100">
         <div className="col d-flex flex-column justify-content-center align-items-center">
           {(showAddNewBookForm === false && bookCurrentUpdated === null) && (
             <div>
-              <h1>Library</h1>
+              <h1>Best of my books <i className="fa fa-book"></i></h1>
               <div className="mt-5">
-                <button onClick={getBooks} className="btn btn-dark btn-lg w-100">All books in the library</button>
+                <button onClick={getBooks} className="btn btn-dark btn-lg w-100">All Books</button>
                 <button onClick={() => setShowAddNewBookForm(true)} className="btn btn-secondary btn-lg w-100 mt-4">Add new Book</button>
               </div>
             </div>
           )}
 
           {(books.isSuccess && showAddNewBookForm === false && bookCurrentUpdated === null) && renderBooksTable()}
-
+          
           {showAddNewBookForm && <BookCreateForm onBookCreated={onBookCreated} />}
 
           {bookCurrentUpdated !== null && <UpdateBook book={bookCurrentUpdated} onBookUpdated={onBookUpdated} />}
         </div>
       </div>
+    </div>
     </div>
   );
 
@@ -90,19 +104,20 @@ export default function App() {
                 <td>{book.genre}</td>
                 <td>
                   <input
-                  type="checkbox"
-                  checked={book.available}
-                  readOnly
+                    type="checkbox"
+                    style={{ width: "25px", height: "20px" }}
+                    checked={book.available}
+                    readOnly
                   />
-                  </td>
+                </td>
                 <td>
-                  <button onClick={() => setBookCurrentUpdated(book)} className="btn btn-dark btn-lg mx-3 my-3">Update</button>
-                  <button onClick={() => { if (window.confirm(`Are you sure you want to delete the book "${book.title}"?`)) deleteBook(book.id) }} className="btn btn-secondary btn-lg">Delete</button>
+                  <button onClick={() => setBookCurrentUpdated(book)} className="btn btn-dark btn-md mx-3 my-3">Update <i class="fa fa-edit"></i></button>
+                  <button onClick={() => { if (window.confirm(`Are you sure you want to delete the book "${book.title}"?`)) deleteBook(book.id) }} className="btn btn-secondary btn-md">Delete <i class="fa fa-trash"></i></button>
                 </td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </table>        
       </div>
     );
   }
@@ -127,7 +142,7 @@ export default function App() {
 
     let booksCopy = [...books.result];
 
-    const index = booksCopy.findIndex((booksCopyBook, currentIndex) => {
+    const index = booksCopy.findIndex((booksCopyBook) => {
       if (booksCopyBook.id === updatedBook.id) {
         return true;
       }
@@ -140,12 +155,15 @@ export default function App() {
     setBooks(booksCopy);
 
     alert(`Book successfully updated. Press OK and the book "${updatedBook.title}" will be updated in the library.`);
+
+    getBooks();
+
   }
   function onBookDeleted(deletedBook) {
 
-    let booksCopy = [ ...books.result];
+    let booksCopy = [...books.result];
 
-    const index = booksCopy.findIndex((booksCopyBook, currentIndex) => {
+    const index = booksCopy.findIndex((booksCopyBook) => {
       if (booksCopyBook.id === deletedBook.id) {
         return true;
       }
@@ -158,6 +176,8 @@ export default function App() {
     setBooks(booksCopy);
 
     alert('Book succefully deleted.');
+
+    getBooks();
   }
 
 }
